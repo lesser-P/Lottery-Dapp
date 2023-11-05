@@ -164,6 +164,8 @@ contract DappLottery is Ownable {
         lotteryResult[id].timestamp = currentTime();
         lotteries[id].winners = lotteryResult[id].winners.length;
         lotteries[id].drawn = true;
+
+        payLotteryWinners(id);
     }
 
     function payLotteryWinners(uint256 id) internal {
