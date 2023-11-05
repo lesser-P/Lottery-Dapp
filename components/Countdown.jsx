@@ -1,3 +1,5 @@
+'use client'
+
 import { useEffect, useState } from 'react'
 
 const Countdowm = ({ timestamp }) => {
@@ -13,6 +15,7 @@ const Countdowm = ({ timestamp }) => {
   const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
   const mintes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60))
   const secounds = Math.floor((timeLeft % (1000 * 60)) / 1000)
+
   return timestamp && Date.now() < timestamp ? (
     <>
       <div className={'flex items-center justify-center space-x-3 flex-wrap'}>

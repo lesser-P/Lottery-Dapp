@@ -32,7 +32,7 @@ function JackPotTable({ jackpot, luckyNumbers, participants }) {
             Generate Lucky Numbers
           </button>
           <Link
-            href={`/results`}
+            href={`/result/${jackpot?.id}`}
             className={
               'flex flex-nowrap border py-2 px-4 rounded-full bg-[#0c2856] hover:bg-[#1a396c] cursor-pointer font-semibold text-white'
             }
