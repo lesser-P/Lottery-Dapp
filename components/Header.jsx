@@ -1,12 +1,16 @@
+'use client'
+
 import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-
+import { connectWallet, truncate } from '@/services/blockchain'
+import { useSelector } from 'react-redux'
 const networking =
   'https://dapplottery.vercel.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fnetworking.1f3500e7.png&w=3840&q=75'
 const background = 'https://dapplottery.vercel.app/_next/static/media/background.a7d45fa2.jpg'
 
 const Header = () => {
+  const { wallet } = useSelector((states) => states.globalStates)
   return (
     <div
       className={'px-5 md:px-40'}
@@ -20,14 +24,25 @@ const Header = () => {
           <p>How to Play</p>
           <p>All Lottery</p>
           <p>Contact</p>
+        </div>
+        {wallet ? (
           <button
             className={
               'flex flex-nowrap border py-2 px-4 rounded-full bg-amber-500 hover:bg-rose-600 cursor-pointer font-semibold text-sm'
             }
           >
+            {truncate(wallet, 4, 4, 11)}
+          </button>
+        ) : (
+          <button
+            className={
+              'flex flex-nowrap border py-2 px-4 rounded-full bg-amber-500 hover:bg-rose-600 cursor-pointer font-semibold text-sm'
+            }
+            onClick={connectWallet}
+          >
             Connect Wallet
           </button>
-        </div>
+        )}
       </div>
 
       <div className={'flex items-center justify-between pb-5'}>
