@@ -5,6 +5,7 @@ import JackPotTable from '@/components/JackPotTable'
 import { useRouter, useParams } from 'next/navigation'
 import { generateLottery, getPurchasedNumbers } from '@/services/fakeData'
 import Generator from '@/components/Generator'
+import { getLottery } from '@/services/blockchain'
 
 function Page() {
   const { jackpotId } = useParams()

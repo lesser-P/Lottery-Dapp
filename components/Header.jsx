@@ -1,9 +1,9 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { connectWallet, truncate } from '@/services/blockchain'
+import { connectWallet, truncate, monitorWalletConnection } from '@/services/blockchain'
 import { useSelector } from 'react-redux'
 const networking =
   'https://dapplottery.vercel.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fnetworking.1f3500e7.png&w=3840&q=75'
@@ -11,6 +11,9 @@ const background = 'https://dapplottery.vercel.app/_next/static/media/background
 
 const Header = () => {
   const { wallet } = useSelector((states) => states.globalStates)
+  useEffect(() => {
+    monitorWalletConnection()
+  }, [])
   return (
     <div
       className={'px-5 md:px-40'}

@@ -4,8 +4,11 @@ import Link from 'next/link'
 import { FaEthereum } from 'react-icons/fa'
 import Identicon from 'react-identicons'
 import Countdowm from './Countdown'
-
+import { useDispatch } from 'react-redux'
+import { globalActions } from '@/store/global_reducer'
 function ResultTable({ jackpot, participants, result }) {
+  const { setWinnerModal } = globalActions
+  const dispatch = useDispatch()
   const truncate = (text, startChars, endChars, maxLength) => {
     if (text.length > maxLength) {
       let start = text.substring(0, startChars)
@@ -37,7 +40,10 @@ function ResultTable({ jackpot, participants, result }) {
         <div className=' flex flex-col justify-center items-center space-y-4 mb-6'>
           {jackpot?.expiresAt ? <Countdowm timestamp={jackpot?.expiresAt} /> : null}
           <div className=' flex justify-center items-center space-x-2'>
-            <button className=' flex flex-nowrap border py-2 px-2 rounded-full bg-green-500 hover:bg-rose-600 font-semibold'>
+            <button
+              onClick={() => dispatch(setWinnerModal('scale-100'))}
+              className=' flex flex-nowrap border py-2 px-2 rounded-full bg-green-500 hover:bg-rose-600 font-semibold'
+            >
               Perform Draw
             </button>
             <Link

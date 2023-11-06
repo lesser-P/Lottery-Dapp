@@ -4,27 +4,30 @@ import { useRouter } from 'next/navigation'
 
 import { useState } from 'react'
 import { FaTimes } from 'react-icons/fa'
+import { globalActions } from '@/store/global_reducer'
+import { useDispatch, useSelector } from 'react-redux'
 function Winners() {
-  const router = useRouter()
+  const { winnerModal } = useSelector((states) => states.globalStates)
+  const { setWinnerModal } = globalActions
+  const dispatch = useDispatch()
+
   const [numberOfwinners, setNumberOfWinners] = useState('')
-  const [close, setClose] = useState('scale-100')
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     console.log(numberOfwinners)
-    setClose('scale-0')
   }
   return (
     <>
       <div
-        className={`fixed top-0 left-0 w-screen h-screen flex items-center justify-center bg-black bg-opacity-50 transform transition-transform duration-300 ${close}`}
+        className={`fixed top-0 left-0 w-screen h-screen flex items-center justify-center bg-black bg-opacity-50 transform transition-transform duration-300 ${winnerModal}`}
       >
         <div className=' bg-white shadow-xl shadow-[#0c2856] rounded-xl w-11/12 md:w-2/5 h-7/12 p-6'>
           <form onSubmit={handleSubmit} className=' flex flex-col'>
             <div className=' flex justify-between items-center'>
               <p className=' font-semibold'>Emerging Winners</p>
               <button
-                onClick={() => setClose('scale-0')}
+                onClick={() => dispatch(setWinnerModal('scale-0'))}
                 type='button'
                 className=' border-0 bg-transparent focus:outline-none'
               >

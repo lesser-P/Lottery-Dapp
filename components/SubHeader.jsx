@@ -1,8 +1,11 @@
 import Link from 'next/link'
+import { useSelector } from 'react-redux'
+import { connectWallet, truncate } from '@/services/blockchain'
 
 const background = 'https://dapplottery.vercel.app/_next/static/media/background.a7d45fa2.jpg'
 
 const SubHeader = () => {
+  const { wallet } = useSelector((state) => state.globalStates)
   return (
     <div
       style={{ background: `url('${background}') fixed no-repeat top/cover` }}
@@ -19,13 +22,24 @@ const SubHeader = () => {
         <p>All Lottery</p>
         <p>Content</p>
       </div>
-      <button
-        className={
-          'flex flex-nowrap border py-2 px-4 rounded-full bg-amber-500 hover:bg-rose-600 cursor-pointer font-semibold text-sm'
-        }
-      >
-        Connect Wallet
-      </button>
+      {wallet ? (
+        <button
+          className={
+            'flex flex-nowrap border py-2 px-4 rounded-full bg-amber-500 hover:bg-rose-600 cursor-pointer font-semibold text-sm'
+          }
+        >
+          {truncate(wallet, 4, 4, 11)}
+        </button>
+      ) : (
+        <button
+          className={
+            'flex flex-nowrap border py-2 px-4 rounded-full bg-amber-500 hover:bg-rose-600 cursor-pointer font-semibold text-sm'
+          }
+          onClick={connectWallet}
+        >
+          Connect Wallet
+        </button>
+      )}
     </div>
   )
 }

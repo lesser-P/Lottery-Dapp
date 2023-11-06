@@ -3,9 +3,33 @@
 import Link from 'next/link'
 import { FaEthereum } from 'react-icons/fa'
 import Countdown from '@/components/Countdown'
+import { globalActions } from '@/store/global_reducer'
+import { useDispatch, useSelector } from 'react-redux'
+import { buyTicket } from '@/services/blockchain'
+import { useParams } from 'next/navigation'
+import { toast } from 'react-toastify'
 
 function JackPotTable({ jackpot, luckyNumbers, participants }) {
+  const { setGeneratorModal } = globalActions
+  const { jackpotId } = useParams
+  const dispatch = useDispatch()
+  const { wallet } = useSelector((states) => states.globalStates)
   const handlePurchase = async (luckyNumberId) => {
+    await toast.promise(
+      new Promise(async (resolve, reject) => {
+        await buyTicket(jackpotId, luckyNumberId, jackpot?.ticketPrice)
+          .then(async () => {
+            resolve()
+          })
+          .catch(() => reject())
+      }),
+      {
+        pending: 'Approve transaction...',
+        success: 'Jackpot created successfully 👌',
+        error: 'Encountered error 🤯',
+      }
+    )
+    buyTicket(jackpotId, luckyNumberId)
     console.log(luckyNumberId)
   }
 
@@ -28,6 +52,7 @@ function JackPotTable({ jackpot, luckyNumbers, participants }) {
             className={
               'flex flex-nowrap border py-2 px-4 rounded-full bg-amber-500 hover:bg-rose-600 font-semibold'
             }
+            onClick={() => dispatch(setGeneratorModal('scale-100'))}
           >
             Generate Lucky Numbers
           </button>

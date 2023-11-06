@@ -53,7 +53,7 @@ const Jackpot = ({ jackpot }) => {
         <div className={'flex justify-start items-center space-x-2'}>
           <Image
             width={100}
-            height={512}
+            height={312}
             src={jackpot.image}
             alt='icon'
             className={'rounded-lg w-20'}

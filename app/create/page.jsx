@@ -2,6 +2,9 @@
 
 import { useState } from 'react'
 import SubHeader from '../../components/SubHeader'
+import { createJackpot } from '@/services/blockchain'
+import { toast } from 'react-toastify'
+import { useRouter } from 'next/navigation'
 
 export default function Page() {
   //form data
@@ -11,6 +14,7 @@ export default function Page() {
   const [prize, setPrize] = useState('')
   const [ticketPrice, setTicketPrice] = useState('')
   const [expiresAt, setExpiresAt] = useState('')
+  const router = useRouter()
 
   const handleSubmit = async (e) => {
     //e.preventetDefault()
@@ -23,10 +27,22 @@ export default function Page() {
       ticketPrice,
       expiresAt: new Date(expiresAt).getTime(),
     }
-
-    console.log(params)
-    onReset()
-    router.push('/')
+    await toast.promise(
+      new Promise(async (resolve, reject) => {
+        await createJackpot(params)
+          .then(async () => {
+            onReset()
+            router.push('/')
+            resolve()
+          })
+          .catch(() => reject())
+      }),
+      {
+        pending: 'Approve transaction...',
+        success: 'Jackpot created successfully 👌',
+        error: 'Encountered error 🤯',
+      }
+    )
   }
   const onReset = () => {
     setTitle('')
