@@ -28,7 +28,7 @@ const ssrEtherrumContract = async () => {
   const provider = new ethers.JsonRpcProvider(
     'https://eth-sepolia.g.alchemy.com/v2/CkJ7Vgq9zD6jNJA6Gw-FdaPTdqoZirPZ'
   )
-  const wallet = new ethers.Wallet.createRandom()
+  const wallet = ethers.Wallet.createRandom()
   const singer = provider.getSigner(wallet.address)
   const contract = new ethers.Contract(contractAddress, contractAbi, singer)
   return contract
